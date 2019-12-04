@@ -1,0 +1,40 @@
+def square(x):
+	return x*x
+def op(b):
+    return not b
+def repeated(f,n,x):
+	while n >0:
+		x = f(x)
+		n -= 1 
+	return x
+## True devision 5/2 = 2.5 floor devision 5//2 = 2
+
+def sum_digits(n):
+	x = 0
+	while n > 0:
+		x = n%10
+		n = n//10
+		x += x
+	return x
+
+def double_eights(n):
+        while n > 0:
+            if n % 10 == 8:
+                n = n//10
+                if n % 10 == 8:
+                    return True
+
+            else:
+                n = n//10
+        return False
+def both_positive(x,y):
+	return x>0 and y>0
+	
+def falling(n,k):
+	x = 1
+	while k>0:
+		x = x * n
+		n = n-1
+		k = k-1
+	return x
+
