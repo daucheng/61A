@@ -22,6 +22,18 @@ def roll_dice(num_rolls, dice=six_sided):
     assert num_rolls > 0, 'Must roll at least once.'
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    point_r , count = 0 , num_rolls
+    
+    while count > 0:
+        roll = dice()
+        count = count -1
+        if roll != 1:
+            point_r = point_r + roll 
+        else:
+            while count > 0:
+                roll , count = dice() , count-1
+            return 1
+    return point_r
     # END PROBLEM 1
 
 
@@ -33,6 +45,9 @@ def free_bacon(score):
     assert score < 100, 'The game should be over.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    point_b = 2 + abs( (score//10)-(score%10) )
+
+    return point_b
     # END PROBLEM 2
 
 
@@ -51,6 +66,11 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert opponent_score < 100, 'The game should be over.'
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+    if num_rolls != 0:
+        point = roll_dice(num_rolls,dice)
+    else:
+        point = free_bacon(opponent_score)
+    return point
     # END PROBLEM 3
 
 
@@ -58,7 +78,15 @@ def is_swap(score0, score1):
     """Return whether one of the scores is an integer multiple of the other."""
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
-    # END PROBLEM 4
+    if score0 > 1 and score1 > 1:
+        if score0 > score1 :
+            if score0 % score1 == 0:
+                return True
+        else:
+            if score1 % score0 == 0:
+                return True
+    return False
+   # END PROBLEM 4
 
 
 def other(player):
@@ -97,7 +125,20 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    while score0 < goal or score1 < goal:
+        if player == 0:
+            score0 += take_turn(strategy0(score0,score1), score1, dice)
+            if is_swap(score0,score1):
+                score0 ,score1 = score1, score0
+            player = other(player)
+        else:
+            score1 += take_turn(strategy1(score1,score0), score1, dice)
+            if is_swap(score0,score1):
+                score0 ,score1 = score1, score0
+            player = other(player)      
+    
     # END PROBLEM 5
+        say = 
     return score0, score1
 
 
