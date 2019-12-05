@@ -1,0 +1,58 @@
+*conditional statement
+
+def absolute_value(x):  
+	if x < 0:
+		return -x
+	elif x == 0:
+		return 0
+	else:
+		return x
+1 statement
+3 clauses, if elif else
+3 headers, x<0,..
+3 suites return -x
+
+1 considered clauses in order
+	start with if
+	0 or more elif
+	0 or one else at the end
+2 evaluate the header
+3 if the header is a true value execute the suite & skip the remain clauses
+	** only one clause will be execute in conditional statement
+
+*Boolean Contexts
+
+False values in Python: False, 0 , ' ' , none
+
+*Iteration
+
+i, total = 0,0
+while i < 3:
+	i = i + 1
+	total = total + 1
+while statement rule
+	evaluate header: i<3
+	execute the suite than return to the header
+
+*higher-order function
+	Take functions as an argumetn value or as a return value
+	**general methods of computation>>one function one job**
+
+*Lambda
+	square = x * x
+	square = lambda x: x * x
+	lambda : a function with formal parameter x that returns the value of x*x	** no return keywords!!
+	** create simple funtion with "single" expression
+	not common in Python, but important in genral
+	in Python cannot contain statements: use def if u need
+
+Comparison:
+	square = lambda x: x*x		vs	def square(x): return x*x
+both creata a function with the same domain, range and behavior
+but "" only def "" gives the function an intrinsic name
+	square > fuction <lambda> at...
+	square > function square at...
+
+
+	
+

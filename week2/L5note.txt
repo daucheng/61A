@@ -1,0 +1,19 @@
+*Environments higher oder function
+	user difined function has a parent frame > often global
+	
+	draw a environment diagram
+	fuction defined: 
+		create a function valued: func <name>(<formal parameters>) [parent=<parent>]
+	parent : current frame ex: make_adder		f1:make_adder(k) [parent = f1]
+
+	when a funciton is called:
+	1. add a local frame, titled with the <name> of the function being called
+	2. copy the parent of th efunction to the local frame: [parent=<local>]
+	3. bind the formal parameter to the arguments in local frame
+	4. execute the body of the fuction 
+
+*Local names
+
+*Function composition
+
+	

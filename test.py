@@ -1,26 +1,21 @@
-def xk(c,d):
-    if c==4:
-        return 6
-    elif d>=4:
-        return 6+7+c
-    else:
-        return 25
-def sobig(x):
-    if x>10:
-        print('huge')
-    elif x>5:
-        return 'big'
-    elif x>0:
-        print('small')
-    else:
-        print("nothin")
+def repeat(f,x):
+    while f(x) !=x:
+        x = f(x)
+    return x
 
-def bake(cake, make):
-     if cake == 0:
-         cake = cake + 1
-         print(cake)
-     if cake == 1:
-         print(make)
-     else:
-         return cake
-     return make            
+def g(y):
+    return(y+5)//3
+
+def make_adder(n):
+        def adder(k):
+            return k+n
+        return adder
+
+def square(x):
+        return x*x
+def triple(x):
+        return 3*x
+def compose(f,g):
+    def h(x):
+        return f(g(x))
+    return h
