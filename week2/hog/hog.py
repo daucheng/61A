@@ -124,21 +124,33 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     """
     player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
+    int_turn = True
     "*** YOUR CODE HERE ***"
     while score0 < goal or score1 < goal:
         if player == 0:
             score0 += take_turn(strategy0(score0,score1), score1, dice)
-            if is_swap(score0,score1):
-                score0 ,score1 = score1, score0
-            player = other(player)
+            
         else:
-            score1 += take_turn(strategy1(score1,score0), score1, dice)
-            if is_swap(score0,score1):
-                score0 ,score1 = score1, score0
-            player = other(player)      
-    
+            score1 += take_turn(strategy1(score1,score0), score0, dice)
+            
+            
+        if is_swap(score0,score1):
+            score0 ,score1 = score1, score0
+            
+        player = other(player)   
+        
     # END PROBLEM 5
-        say = 
+    # BEGIN PROBLEM 5
+        if int_turn:
+            say = both(say_scores,say)
+            int_turn = False
+        else:
+            say = say(score0,score1)
+            
+        
+    # END PROBLEM 6
+    
+        
     return score0, score1
 
 
@@ -191,7 +203,9 @@ def both(f, g):
     Player 1 takes the lead by 12
     """
     def say(score0, score1):
-        return both(f(score0, score1), g(score0, score1))
+        
+        return both(f(score0, score1), g(score0,score1))
+        
     return say
 
 
@@ -213,6 +227,7 @@ def announce_highest(who, previous_high=0, previous_score=0):
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    
     # END PROBLEM 7
 
 
