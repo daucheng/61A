@@ -140,11 +140,11 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
         player = other(player)   
         
     # END PROBLEM 5
-    # BEGIN PROBLEM 5
+    # BEGIN PROBLEM 6
         if int_turn:
-            say = both(say_scores,say)
+            say = both(say_scores,announce_lead_changes())
             int_turn = False
-        else:
+        else: 
             say = say(score0,score1)
             
         
