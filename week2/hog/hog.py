@@ -227,6 +227,25 @@ def announce_highest(who, previous_high=0, previous_score=0):
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    def say(score0,score1):
+        if who == 0:
+            if (score0 - previous_score) > previous_high:
+                print((score0 - previous_score),"points! That's the biggest gain yet for Player 1")
+                who == 1
+                return announce_heighest(who,(score0 - previous_score),score0)
+            else:
+                who == 1
+                return announce_heighest(who,previous_high,score0)
+        else:
+            if (score1 - previous_score) > previous_high:
+                print((score1 - previous_score),"points! That's the biggest gain yet for Player 2")
+                who == 0
+                return announce_heighest(who ,(score1 - previous_score),score1)
+            else:
+                who ==0
+                return announce_highest(who, previous_high,score1)
+        return announce_heighest(who,previous_high,previous_score)
+    return say
     
     # END PROBLEM 7
 
@@ -267,6 +286,17 @@ def make_averaged(fn, num_samples=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    
+    def count_average(*args):
+        sum_samples , times = 0 , num_samples
+        while times > 0:
+            sum_samples += fn(*args)
+            times = times-1
+        
+        average = sum_samples/num_samples
+        return average
+    return count_average
+       
     # END PROBLEM 8
 
 
@@ -281,6 +311,17 @@ def max_scoring_num_rolls(dice=six_sided, num_samples=1000):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    i , max_point = 1 , 0
+    while i <= 10:    
+        possible_point = make_averaged(roll_dice,num_samples)
+        
+        avg_point_rolls = possible_point(i,dice)
+        
+        if avg_point_rolls > max_point:
+            max_point = avg_point_rolls
+            max_scoring_num_rolls = i
+        i += 1
+    return max_scoring_num_rolls
     # END PROBLEM 9
 
 
@@ -329,7 +370,10 @@ def bacon_strategy(score, opponent_score, margin=8, num_rolls=4):
     rolls NUM_ROLLS otherwise.
     """
     # BEGIN PROBLEM 10
-    return 4  # Replace this statement
+    if free_bacon(opponent_score) >= margin:
+        return 0
+    else:
+        return num_rolls  # Replace this statement
     # END PROBLEM 10
 
 
@@ -339,7 +383,13 @@ def swap_strategy(score, opponent_score, margin=8, num_rolls=4):
     NUM_ROLLS.
     """
     # BEGIN PROBLEM 11
-    return 4  # Replace this statement
+    if is_swap(score,opponent_score):
+        if score < opponent_score:
+                return 0
+    elif free_bacon(opponent_score) >= margin:
+        return 0
+    else:        
+        return num_rolls  # Replace this statement
     # END PROBLEM 11
 
 
@@ -349,6 +399,7 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 12
+    
     return 4  # Replace this statement
     # END PROBLEM 12
 
