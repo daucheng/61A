@@ -28,7 +28,7 @@ def composite_identity(f, g):
     and vice versa.
 
     >>> add_one = lambda x: x + 1        # adds one to x
-    >>> square = lambda x: x**2
+    >>> square = lambda x: x**2, 
     >>> b1 = composite_identity(square, add_one)
     >>> b1(0)                            # (0 + 1)^2 == 0^2 + 1
     True
@@ -36,6 +36,13 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
+    def test_identity(x):
+        if compose1(f,g)(x) == compose1(g,f)(x):
+            return True
+        else: 
+            return False
+    
+    return test_identity
 
 def count_cond(condition):
     """Returns a function with one parameter N that counts all the numbers from
@@ -63,6 +70,14 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
+    def count(n):
+        count_true , test_data = 0 , 1
+        while test_data <= n:
+            if condition(n , test_data):
+                count_true = count_true +1
+            test_data += 1    
+        return count_true                
+    return count
 
 def cycle(f1, f2, f3):
     """Returns a function that is itself a higher-order function.
@@ -85,9 +100,25 @@ def cycle(f1, f2, f3):
     9
     >>> do_more_than_a_cycle = my_cycle(4)
     >>> do_more_than_a_cycle(2)
-    10
+    10    
     >>> do_two_cycles = my_cycle(6)
     >>> do_two_cycles(1)
     19
     """
     "*** YOUR CODE HERE ***"
+    def count_cycle(x):
+        if x == 0:
+            return lambda x:x
+        else:
+            def count_ans(n):
+                circle_num , ans = 1 , n
+                while circle_num <= x:
+                    if circle_num % 3 == 1:
+                        circle_num,ans =circle_num+1, f1(ans)
+                    elif circle_num % 3 == 2:
+                        circle_num,ans =circle_num+1, f2(ans)
+                    else:
+                        circle_num,ans =circle_num+1, f3(ans)
+                return ans 
+        return count_ans          
+    return count_cycle
