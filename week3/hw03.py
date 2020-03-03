@@ -198,8 +198,38 @@ def compose1(f, g):
 # Extra Questions #
 ###################
 
-quine = """
-"*** YOUR CODE HERE ***"
+s = 's=%r;print(s%%s)';print(s%s)
+
+
+
+"""
+quine > takes no input but print itself
+
+str  >  print(str('hi')) >> hi
+repr >  print(repr('hi'))>> 'hi'
+str:可讀性 輸出格式便於理解
+repr: 輸出明確性 除了內容 還會展現數據類型的訊息
+ex:
+>>> import datetime
+>>> today = datetime.datetime.now()
+>>> print(str(today))
+2019-12-31 12:49:13.089744
+>>> print(repr(today))
+datetime.datetime(2019, 12, 31, 12, 49, 13, 89744)
+
+eval function解析並執行字串 並輸出結果
+
+>>> variable = 'print("something involving variable and eval(variable)")'
+>>> eval(variable)
+something involving variable and eval(variable) #執行' '內字串>print
+
+>>> variable = 'print("variable = " +variable +"eval(variable)")' 
+>>> eval(variable)
+variable = print("variable = " +variable +"eval(variable)")eval(variable)
+
+>>> variable = 'print("variable = " +repr(variable) +"eval(variable)")'
+>>> eval(variable)
+variable = 'print("variable = " +repr(variable) +"eval(variable)")'eval(variable)
 """
 
 def zero(f):
@@ -211,10 +241,13 @@ def successor(n):
 def one(f):
     """Church numeral 1: same as successor(zero)"""
     "*** YOUR CODE HERE ***"
+    return lambda x: f(x) 
+    
 
 def two(f):
     """Church numeral 2: same as successor(successor(zero))"""
     "*** YOUR CODE HERE ***"
+    return lambda x: f(f(x))
 
 three = successor(two)
 
@@ -239,6 +272,7 @@ def add_church(m, n):
     5
     """
     "*** YOUR CODE HERE ***"
+    return lambda f: lambda x: m(f)(n(f)(x))
 
 def mul_church(m, n):
     """Return the Church numeral for m * n, for Church numerals m and n.

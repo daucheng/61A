@@ -106,6 +106,23 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
+    """
+    
+        def take_arg_n(n):
+        def take_arg_x(x):
+            sum_res,i = x,0
+            ori_ls = [f1,f2,f3]
+            func_ls = ori_ls*(n//3) + ori_ls[0:n%3]
+            if n == 0:
+                return x
+            else:
+                while i<n:
+                    sum_res = func_ls[i](sum_res)
+                    i +=1
+                return sum_res
+        return take_arg_x
+    return take_arg_n
+    """
     def count_cycle(x):
         if x == 0:
             return lambda x:x
