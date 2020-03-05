@@ -37,4 +37,7 @@ def sum_digits(n):
         return n
     else:
         return (n%10) + sum_digits(n//10)
+
+def mystery(f,x):
+    return lambda y: f(x,y)
     
