@@ -132,9 +132,9 @@ def merge(lst1, lst2):
     for i in lst1:
         if i == None:
             lst1.remove(i)
-    lst1.sort()    
-    
+    lst1.sort()        
     return lst1
+
 if __name__=='__main__':
     import doctest
     doctest.testmod()
