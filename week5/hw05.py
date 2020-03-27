@@ -95,6 +95,12 @@ def replace_leaf(t, old, new):
     True
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        if label(t) == old:
+            return tree(new)
+        else:
+            return t  
+    return tree(label(t),[replace_leaf(b,old,new) for b in branches(t)])
 
 def print_move(origin, destination):
     """Print instructions to move a disk."""
@@ -129,6 +135,19 @@ def move_stack(n, start, end):
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
+    if n == 1:
+        print_move(start,end)#move the largest to the end
+    else:
+        #step 1:move all disk except the largest one the the other rod
+        #step 2:move the largest to the end rod
+        #step 3:move all disk to the end rod
+        other = 6-start-end #confirmed the third rod
+        move_stack(n-1,start,other)
+        print_move(start,end)
+        move_stack(n-1,other,end)
+        
+
+
 
 ###########
 # Mobiles #
@@ -167,14 +186,19 @@ def weight(size):
     """Construct a weight of some size."""
     assert size > 0
     "*** YOUR CODE HERE ***"
+    return tree(size,[])
+    
 
 def size(w):
     """Select the size of a weight."""
     "*** YOUR CODE HERE ***"
+    assert is_weight(w)
+    return label(w)
 
 def is_weight(w):
     """Whether w is a weight, not a mobile."""
     "*** YOUR CODE HERE ***"
+    return not is_mobile(w) and type(label(w))==int and branches(w)==[]
 
 def examples():
     t = mobile(side(1, weight(2)),
@@ -220,6 +244,16 @@ def balanced(m):
     False
     """
     "*** YOUR CODE HERE ***"
+    for side in sides(m):
+        if is_mobile(end(side)) and not balanced(end(side)): #單獨mobile平衡 但兩邊有一邊為mobile則不平衡
+            return False
+
+    w0 ,w1 = total_weight(end(sides(m)[0])), total_weight(end(sides(m)[1]))
+    return w0 * length(sides(m)[0]) == w1 * length(sides(m)[1])
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
 
 #######
 # OOP #
@@ -267,6 +301,9 @@ class Account:
     def time_to_retire(self, amount):
         """Return the number of years until balance would grow to amount."""
         assert self.balance > 0 and amount > 0 and self.interest > 0
+        year = 0
+        while  
+
         "*** YOUR CODE HERE ***"
 
 class FreeChecking(Account):
@@ -512,4 +549,5 @@ def polynomial(x, c):
     '18.0 to 23.0'
     """
     "*** YOUR CODE HERE ***"
+
 
