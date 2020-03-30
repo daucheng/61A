@@ -1,82 +1,3 @@
-""" Lab 05: Mutable Sequences and Trees """
-# Q2
-def map(fn, seq):
-    """Applies fn onto each element in seq and returns a list.
-
-    >>> map(lambda x: x*x, [1, 2, 3])
-    [1, 4, 9]
-    """
-    "*** YOUR CODE HERE ***"
-
-def filter(pred, seq):
-    """Keeps elements in seq only if they satisfy pred.
-
-    >>> filter(lambda x: x % 2 == 0, [1, 2, 3, 4])
-    [2, 4]
-    """
-    "*** YOUR CODE HERE ***"
-
-def reduce(combiner, seq):
-    """Combines elements in seq using combiner.
-
-    >>> reduce(lambda x, y: x + y, [1, 2, 3, 4])
-    10
-    >>> reduce(lambda x, y: x * y, [1, 2, 3, 4])
-    24
-    >>> reduce(lambda x, y: x * y, [4])
-    4
-    """
-    "*** YOUR CODE HERE ***"
-
-# Q3
-def acorn_finder(t):
-    """Returns True if t contains a node with the value 'acorn' and
-    False otherwise.
-
-    >>> scrat = tree('acorn')
-    >>> acorn_finder(scrat)
-    True
-    >>> sproul = tree('roots', [tree('branch1', [tree('leaf'), tree('acorn')]), tree('branch2')])
-    >>> acorn_finder(sproul)
-    True
-    >>> numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
-    >>> acorn_finder(numbers)
-    False
-    """
-    "*** YOUR CODE HERE ***"
-
-# Q4
-def replace_leaf(t, old, new):
-    """Returns a new tree where every leaf value equal to old has
-    been replaced with new.
-
-    >>> yggdrasil = tree('odin',
-    ...                  [tree('balder',
-    ...                        [tree('thor'),
-    ...                         tree('loki')]),
-    ...                   tree('frigg',
-    ...                        [tree('thor')]),
-    ...                   tree('thor',
-    ...                        [tree('sif'),
-    ...                         tree('thor')]),
-    ...                   tree('thor')])
-    >>> laerad = copy_tree(yggdrasil) # copy yggdrasil for testing purposes
-    >>> print_tree(replace_leaf(yggdrasil, 'thor', 'freya'))
-    odin
-      balder
-        freya
-        loki
-      frigg
-        freya
-      thor
-        sif
-        freya
-      freya
-    >>> laerad == yggdrasil # Make sure original tree is unmodified
-    True
-    """
-    "*** YOUR CODE HERE ***"
-
 # Tree ADT
 def tree(label, branches=[]):
     """Construct a tree with the given label value and a list of branches."""
@@ -140,3 +61,106 @@ def copy_tree(t):
     5
     """
     return tree(label(t), [copy_tree(b) for b in branches(t)])
+
+""" Lab 05: Mutable Sequences and Trees """
+
+# Q2
+def map(fn, seq):
+    """Applies fn onto each element in seq and returns a list.
+
+    >>> map(lambda x: x*x, [1, 2, 3])
+    [1, 4, 9]
+    """
+    "*** YOUR CODE HERE ***"
+    return [fn(x) for x in seq]
+
+def filter(pred, seq):
+    """Keeps elements in seq only if they satisfy pred.
+
+    >>> filter(lambda x: x % 2 == 0, [1, 2, 3, 4])
+    [2, 4]
+    """
+    "*** YOUR CODE HERE ***"
+    return [x for x in seq if pred(x) == True]
+
+def reduce(combiner, seq):
+    """Combines elements in seq using combiner.
+
+    >>> reduce(lambda x, y: x + y, [1, 2, 3, 4])
+    10
+    >>> reduce(lambda x, y: x * y, [1, 2, 3, 4])
+    24
+    >>> reduce(lambda x, y: x * y, [4])
+    4
+    """
+    "*** YOUR CODE HERE ***"
+    count = seq[0]
+    if len(seq) == 1:
+        return count
+    else:
+        for x in seq[1:]:
+            count = combiner(count,x)
+    return count
+
+
+# Q3
+def acorn_finder(t):
+    """Returns True if t contains a node with the value 'acorn' and
+    False otherwise.
+
+    >>> scrat = tree('acorn')
+    >>> acorn_finder(scrat)
+    True
+    >>> sproul = tree('roots', [tree('branch1', [tree('leaf'), tree('acorn')]), tree('branch2')])
+    >>> acorn_finder(sproul)
+    True
+    >>> numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+    >>> acorn_finder(numbers)
+    False
+    """
+    "*** YOUR CODE HERE ***"
+    if label(t) == 'acorn':
+        return True
+    else:
+        return True in [acorn_finder(b) for b in branches(t)]
+
+# Q4
+def replace_leaf(t, old, new):
+    """Returns a new tree where every leaf value equal to old has
+    been replaced with new.
+
+    >>> yggdrasil = tree('odin',
+    ...                  [tree('balder',
+    ...                        [tree('thor'),
+    ...                         tree('loki')]),
+    ...                   tree('frigg',
+    ...                        [tree('thor')]),
+    ...                   tree('thor',
+    ...                        [tree('sif'),
+    ...                         tree('thor')]),
+    ...                   tree('thor')])
+    >>> laerad = copy_tree(yggdrasil) # copy yggdrasil for testing purposes
+    >>> print_tree(replace_leaf(yggdrasil, 'thor', 'freya'))
+    odin
+      balder
+        freya
+        loki
+      frigg
+        freya
+      thor
+        sif
+        freya
+      freya
+    >>> laerad == yggdrasil # Make sure original tree is unmodified
+    True
+    """
+    "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        if label(t) == old:
+            return tree(new)
+        return t
+    return tree(label(t), [replace_leaf(b,old,new) for b in branches(t)])
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()   

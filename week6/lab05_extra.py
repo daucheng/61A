@@ -20,10 +20,10 @@ def build_successors_table(tokens):
     table = {}
     prev = '.'
     for word in tokens:
-        if prev not in table:
-            "*** YOUR CODE HERE ***"
-        "*** YOUR CODE HERE ***"
-        prev = word
+      if prev not in table:
+        table[prev] = []
+      table[prev] += [word]
+      prev = word
     return table
 
 def construct_sent(word, table):
@@ -39,9 +39,14 @@ def construct_sent(word, table):
     import random
     result = ''
     while word not in ['.', '!', '?']:
-        "*** YOUR CODE HERE ***"
+      
+        result += word
+        result += ' '
+        word = random.choice(table[word])
     return result.strip() + word
-
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod() 
 def shakespeare_tokens(path='shakespeare.txt', url='http://composingprograms.com/shakespeare.txt'):
     """Return the words of Shakespeare's plays as a list."""
     import os
@@ -53,8 +58,8 @@ def shakespeare_tokens(path='shakespeare.txt', url='http://composingprograms.com
         return shakespeare.read().decode(encoding='ascii').split()
 
 # Uncomment the following two lines
-# tokens = shakespeare_tokens()
-# table = build_successors_table(tokens)
+#tokens = shakespeare_tokens()
+#table = build_successors_table(tokens)
 
 def random_sent():
     import random
@@ -62,31 +67,9 @@ def random_sent():
 
 # Q8
 def prune_leaves(t, vals):
-    """Return a modified copy of t with all leaves that have a label
-    that appears in vals removed.  Return None if the entire tree is
-    pruned away.
-
-    >>> t = tree(2)
-    >>> print(prune_leaves(t, (1, 2)))
-    None
-    >>> numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
-    >>> print_tree(numbers)
-    1
-      2
-      3
-        4
-        5
-      6
-        7
-    >>> print_tree(prune_leaves(numbers, (3, 4, 6, 7)))
-    1
-      2
-      3
-        5
-      6
-    """
-    "*** YOUR CODE HERE ***"
-
+    if label(t) in vals:
+        t = tree(label(t),[]) 
+    return tree(label(t), [prune_leaves(b,vals) for b in branches(t)])
 # Q9
 def sprout_leaves(t, vals):
     """Sprout new leaves containing the data in vals at each leaf in
@@ -121,7 +104,10 @@ def sprout_leaves(t, vals):
           1
           2
     """
-    "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return tree(label(t),[tree(val) for val in vals])
+    return tree(label(t), [sprout_leaves(b,vals) for b in branches(t)])
+  
 
 # Q10
 def add_trees(t1, t2):
