@@ -74,8 +74,9 @@ def cumulative_sum(t):
     for b in t.branches:
         cumulative_sum(b)
     t.label += sum([b.label for b in t.branches])
-    
-         
+
+
+
 
 
 # Linked List Class

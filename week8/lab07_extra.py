@@ -97,7 +97,7 @@ def has_cycle_constant(link):
     return False
 
 # Q9
-def reverse_other(t):
+def reverse_other(t , depth = 0):
     """Mutates the tree such that nodes on every other (even_indexed) level
     have the labels of their branches all reversed.
 
@@ -113,9 +113,10 @@ def reverse_other(t):
     "*** YOUR CODE HERE ***"
     if depth % 2 == 1:
         for b in t.branches:
-            reverse_other(b, depth+1)
+            reverse_other(t,depth+1)
     else:
         labels = [b.label for b in t.branches]
         for index, b in enumerate(t.branches):
             b.label = labels[-index-1]
             reverse_other(b, depth+1)
+
