@@ -52,5 +52,5 @@ def contains_n(elem, n, t):
 def factor_tree(n):
     for i in range(2,n) :
         if n % i == 0:
-            return Tree(n,[i,factor_tree(n//i)])
+            return Tree(n,[i,factor_tree(n// i)])
     return Tree(n)
